@@ -11,19 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
-public class taskAdpter extends ArrayAdapter<setData> {
+public class rejectedAdapter extends ArrayAdapter<rejectedData> {
     Context context;
     int resource;
-    List<setData> setData;
+    List<rejectedData> rejectedData;
 
-    public taskAdpter(Context context, int resource, List<setData> setData) {
-        super(context, resource, setData);
+    public rejectedAdapter(Context context, int resource, List<rejectedData> rejectedData) {
+        super(context, resource, rejectedData);
 
         this.context = context;
         this.resource = resource;
-        this.setData = setData;
+        this.rejectedData = rejectedData;
     }
 
     @NonNull
@@ -31,13 +30,13 @@ public class taskAdpter extends ArrayAdapter<setData> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(resource, null, false);
-        TextView title = view.findViewById(R.id.task_title);
-        TextView time = view.findViewById(R.id.task_time);
-        TextView deadLine = view.findViewById(R.id.task_deadline);
-        setData newSetData = setData.get(position);
-        title.setText(newSetData.getTitle());
-        time.setText(newSetData.getDate());
-        deadLine.setText(newSetData.getDeadLine());
+        TextView title = view.findViewById(R.id.rejected_title);
+//        TextView time = view.findViewById(R.id.task_time);
+//        TextView deadLine = view.findViewById(R.id.task_deadline);
+        rejectedData newRejectedDate = rejectedData.get(position);
+        title.setText(newRejectedDate.getTitle());
+//        time.setText(newSetData.getDate());
+//        deadLine.setText(newSetData.getDeadLine());
         return view;
     }
 }

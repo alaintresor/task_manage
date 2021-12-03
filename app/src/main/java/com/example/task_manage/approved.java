@@ -24,18 +24,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class new_tasks extends AppCompatActivity {
-    ListView taskList;
+public class approved extends AppCompatActivity {
+    ListView approvedList;
     TextView isEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_tasks);
-        taskList = findViewById(R.id.task_list);
+        setContentView(R.layout.activity_approved);
+        approvedList = findViewById(R.id.approved_list);
         isEmpty = findViewById(R.id.isEmpty);
-
-        getSupportActionBar().setTitle("New Assigned Tasks");
+        getSupportActionBar().setTitle("Approved Tasks");
         final List<setData> setData;
         setData = new ArrayList<>();
 
@@ -78,7 +77,7 @@ public class new_tasks extends AppCompatActivity {
                 String[] data = new String[1];
                 data[0] = userId;
 
-                PutData putData = new PutData(url.getLink() + "/getTasks.php", "POST", field, data);
+                PutData putData = new PutData(url.getLink() + "/getApprovedTasks.php", "POST", field, data);
                 if (putData.startPut()) {
 
                     String result = null;
@@ -106,7 +105,7 @@ public class new_tasks extends AppCompatActivity {
 
                                 }
                                 taskAdapter taskAdapter = new taskAdapter(getApplicationContext(), R.layout.task_item, setData);
-                                taskList.setAdapter(taskAdapter);
+                                approvedList.setAdapter(taskAdapter);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -125,7 +124,7 @@ public class new_tasks extends AppCompatActivity {
 
         });
 
-        taskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        approvedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), task_details.class);

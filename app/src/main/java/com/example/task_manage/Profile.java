@@ -1,16 +1,20 @@
 package com.example.task_manage;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 import org.json.JSONArray;
@@ -18,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Profile extends AppCompatActivity {
-    TextView namesTextView, emailTextView, phoneTextView;
+    TextView namesTextView, emailTextView, phoneTextView, changePasswordTextView, userNameTextView;
     CheckBox htmlCheckBox, cssCheckBox, jsCheckBox, androidCheckBox, phpCheckBox;
     Button updateUserInfoBtn;
 
@@ -27,6 +31,8 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        getSupportActionBar().setTitle("User Profile");
 
         final String userId = getIntent().getStringExtra("userId");
         final Handler handler = new Handler(Looper.getMainLooper());
@@ -39,45 +45,74 @@ public class Profile extends AppCompatActivity {
         androidCheckBox = findViewById(R.id.AndroidCheckBox);
         phpCheckBox = findViewById(R.id.PhpCheckBox);
         updateUserInfoBtn = findViewById(R.id.updateUserInfo);
+        changePasswordTextView = findViewById(R.id.ch_password);
+        userNameTextView = findViewById(R.id.userName);
+
+        BottomNavigationView bottomNavigationView1 = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        //bottomNavigationView1.getMenu();
+
+        bottomNavigationView1.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.account:
+                        Intent intent = new Intent(getApplicationContext(), Profile.class);
+                        intent.putExtra("userId", userId);
+                        startActivity(intent);
+                        break;
+
+                    case R.id.homeNav:
+                        Intent intent2 = new Intent(getApplicationContext(), Home.class);
+                        intent2.putExtra("userId", userId);
+                        startActivity(intent2);
+                }
+                return false;
+            }
+        });
+
+        changePasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), changePassword.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+            }
+        });
+
         // phpCheckBox.setChecked(true);
 
         htmlCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (htmlCheckBox.isChecked()) {
                 check("html");
-            }
-            else{
+            } else {
                 uncheck("html");
             }
         });
         cssCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (cssCheckBox.isChecked()) {
                 check("css");
-            }
-            else{
+            } else {
                 uncheck("css");
             }
         });
         jsCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (jsCheckBox.isChecked()) {
                 check("js");
-            }
-            else{
+            } else {
                 uncheck("js");
             }
         });
         androidCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (androidCheckBox.isChecked()) {
                 check("android");
-            }
-            else{
+            } else {
                 uncheck("android");
             }
         });
         phpCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (phpCheckBox.isChecked()) {
                 check("php");
-            }
-            else{
+            } else {
                 uncheck("php");
             }
         });
@@ -109,6 +144,7 @@ public class Profile extends AppCompatActivity {
                             String email = object.getString("email");
                             String phone = object.getString("phone");
 
+                            userNameTextView.setText(names);
                             namesTextView.setText(names);
                             emailTextView.setText(email);
                             phoneTextView.setText(phone);
@@ -146,31 +182,28 @@ public class Profile extends AppCompatActivity {
                             JSONArray array = new JSONArray(result);
 
 
-
                             for (int i = 0; i < array.length(); i++) {
 
                                 JSONObject object = array.getJSONObject(i);
                                 String name = object.getString("name");
-                              if(name.equals("php")){
-                                  phpCheckBox.setChecked(true);
-                              }
-                                if(name.equals("html")){
+                                if (name.equals("php")) {
+                                    phpCheckBox.setChecked(true);
+                                }
+                                if (name.equals("html")) {
                                     htmlCheckBox.setChecked(true);
                                 }
-                                if(name.equals("js")){
+                                if (name.equals("js")) {
                                     jsCheckBox.setChecked(true);
                                 }
-                                if(name.equals("css")){
+                                if (name.equals("css")) {
                                     cssCheckBox.setChecked(true);
                                 }
-                                if(name.equals("android")){
+                                if (name.equals("android")) {
                                     androidCheckBox.setChecked(true);
                                 }
 
 
-
                             }
-
 
 
                         } catch (JSONException e) {
@@ -258,7 +291,7 @@ public class Profile extends AppCompatActivity {
                         String result = putData.getResult();
                         if (result.toString().equals("Data added well")) {
 
-                           // Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_SHORT).show();
 
 
                         } else {
@@ -275,6 +308,7 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
+
     public void uncheck(String skill) {
 
         final String userId = getIntent().getStringExtra("userId");

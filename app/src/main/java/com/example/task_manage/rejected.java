@@ -24,20 +24,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class new_tasks extends AppCompatActivity {
-    ListView taskList;
+public class rejected extends AppCompatActivity {
+    ListView rejectedList;
     TextView isEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_tasks);
-        taskList = findViewById(R.id.task_list);
+        setContentView(R.layout.activity_rejected);
+        rejectedList = findViewById(R.id.rejected_list);
         isEmpty = findViewById(R.id.isEmpty);
-
-        getSupportActionBar().setTitle("New Assigned Tasks");
-        final List<setData> setData;
-        setData = new ArrayList<>();
+        getSupportActionBar().setTitle("Rejected Tasks");
+        final List<rejectedData> RejectedData;
+        RejectedData = new ArrayList<>();
 
         //get user ID
         final String userId = getIntent().getStringExtra("userId");
@@ -78,7 +77,7 @@ public class new_tasks extends AppCompatActivity {
                 String[] data = new String[1];
                 data[0] = userId;
 
-                PutData putData = new PutData(url.getLink() + "/getTasks.php", "POST", field, data);
+                PutData putData = new PutData(url.getLink() + "/getRejectedTasks.php", "POST", field, data);
                 if (putData.startPut()) {
 
                     String result = null;
@@ -94,19 +93,15 @@ public class new_tasks extends AppCompatActivity {
                                     JSONObject object = array.getJSONObject(i);
                                     String projectName = object.getString("projectName");
                                     String taskId = object.getString("taskId");
-                                    String date = object.getString("date");
-                                    String description = object.getString("description");
-                                    String deadline = object.getString("deadline");
+                                    String feedback = object.getString("feedback");
                                     String taskName = object.getString("taskName");
-                                    String amount = object.getString("amount");
-                                    String skills = object.getString("skills");
 
-                                    setData.add(new setData(projectName, taskId, date, taskName, description, skills, deadline, amount));
 
+                                    RejectedData.add(new rejectedData(projectName, taskId, taskName, feedback));
 
                                 }
-                                taskAdapter taskAdapter = new taskAdapter(getApplicationContext(), R.layout.task_item, setData);
-                                taskList.setAdapter(taskAdapter);
+                                rejectedAdapter rejectedAdapter = new rejectedAdapter(getApplicationContext(), R.layout.rejected_item, RejectedData);
+                                rejectedList.setAdapter(rejectedAdapter);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -125,26 +120,26 @@ public class new_tasks extends AppCompatActivity {
 
         });
 
-        taskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        for just testing
+
+//        RejectedData.add(new rejectedData("projectName", "taskId", "taskName", "feedback"));
+//        rejectedAdapter rejectedAdapter = new rejectedAdapter(getApplicationContext(), R.layout.rejected_item, RejectedData);
+//        rejectedList.setAdapter(rejectedAdapter);
+
+        rejectedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), task_details.class);
-                String time = setData.get(i).getDate();
-                String title = setData.get(i).getTitle();
-                String description = setData.get(i).getDescription();
-                String tech = setData.get(i).getTech();
-                String deadLine = setData.get(i).getDeadLine();
-                String earn = setData.get(i).getEarn();
-                String projectName = setData.get(i).getProjectName();
+                Intent intent = new Intent(getApplicationContext(), rejected_details.class);
+
+                String title = RejectedData.get(i).getTitle();
+                String feedback = RejectedData.get(i).getFeedback();
+                String projectName = RejectedData.get(i).getProjectName();
 
                 intent.putExtra("userId", userId);
                 intent.putExtra("projectName", projectName);
-                intent.putExtra("time", time);
                 intent.putExtra("title", title);
-                intent.putExtra("description", description);
-                intent.putExtra("tech", tech);
-                intent.putExtra("deadline", deadLine);
-                intent.putExtra("earn", earn);
+                intent.putExtra("feedback", feedback);
+
                 startActivity(intent);
             }
         });

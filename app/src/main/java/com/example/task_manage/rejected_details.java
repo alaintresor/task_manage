@@ -10,24 +10,23 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class task_details extends AppCompatActivity {
-    TextView titleTextView, descriptionTextView, techTextView, earnTextView, deadlineTextView, projectNameTextView;
+public class rejected_details extends AppCompatActivity {
+    TextView projectNameTextView, taskNameTextView, feedbackTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_details);
-        getSupportActionBar().setTitle("Task Details");
-        titleTextView = findViewById(R.id.task_name);
-        descriptionTextView = findViewById(R.id.task_details);
-        techTextView = findViewById(R.id.required_technology);
-        earnTextView = findViewById(R.id.earn);
-        deadlineTextView = findViewById(R.id.deadline);
-        projectNameTextView = findViewById(R.id.projectName);
+        setContentView(R.layout.activity_rejected_details);
 
-
-        //get user ID
         final String userId = getIntent().getStringExtra("userId");
+
+
+        projectNameTextView = findViewById(R.id.proName);
+        taskNameTextView = findViewById(R.id.tName);
+        feedbackTextView = findViewById(R.id.feedback);
+
+        getSupportActionBar().setTitle("Rejected Details");
+
 
         BottomNavigationView bottomNavigationView1 = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         //bottomNavigationView1.getMenu();
@@ -52,18 +51,12 @@ public class task_details extends AppCompatActivity {
         });
 
         String title = getIntent().getStringExtra("title");
-        String description = getIntent().getStringExtra("description");
-        String tech = getIntent().getStringExtra("tech");
-        String deadline = getIntent().getStringExtra("deadline");
-        String earn = getIntent().getStringExtra("earn");
+        String feedback = getIntent().getStringExtra("feedback");
         String projectName = getIntent().getStringExtra("projectName");
 
-        titleTextView.setText(title);
-        descriptionTextView.setText(description);
-        techTextView.setText(tech);
-        deadlineTextView.setText(deadline);
-        earnTextView.setText(earn);
         projectNameTextView.setText(projectName);
+        taskNameTextView.setText(title);
+        feedbackTextView.setText(feedback);
 
     }
 }

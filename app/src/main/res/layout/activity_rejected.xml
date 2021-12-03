@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".new_tasks">
+    tools:context=".rejected">
 
     <ListView
-        android:id="@+id/task_list"
+        android:id="@+id/rejected_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="No New Assigned Task"
+        android:text="No Rejected Task"
         android:textColor="#F84343"
         android:textSize="20sp"
         android:visibility="gone"

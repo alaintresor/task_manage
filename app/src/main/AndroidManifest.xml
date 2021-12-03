@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Task_manage">
-        <activity android:name=".changePassword"></activity>
+        <activity android:name=".rejected_details"></activity>
+        <activity android:name=".rejected" />
+        <activity android:name=".approved" />
+        <activity android:name=".changePassword" />
         <activity android:name=".Profile" />
         <activity android:name=".submit" />
         <activity android:name=".task_details" />

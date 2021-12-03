@@ -118,7 +118,8 @@ public class submit extends AppCompatActivity implements AdapterView.OnItemSelec
                     if (putData.onComplete()) {
                         // progressBar.setVisibility(View.GONE);
                         result = putData.getResult();
-                        if (!result.toString().equals("No task found")) {
+                        if (!result.toString().equals("No project found")) {
+
                             try {
                                 JSONArray array = new JSONArray(result);
 
@@ -135,7 +136,7 @@ public class submit extends AppCompatActivity implements AdapterView.OnItemSelec
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         } else {
-
+                            project.add("No project Found!");
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
@@ -236,6 +237,7 @@ public class submit extends AppCompatActivity implements AdapterView.OnItemSelec
                         // progressBar.setVisibility(View.GONE);
                         result = putData.getResult();
                         if (!result.toString().equals("No task found")) {
+
                             try {
                                 JSONArray array = new JSONArray(result);
 
@@ -252,7 +254,7 @@ public class submit extends AppCompatActivity implements AdapterView.OnItemSelec
                                 Toast.makeText(parent.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         } else {
-
+                           
                         }
                     } else {
                         Toast.makeText(parent.getContext(), result, Toast.LENGTH_SHORT).show();

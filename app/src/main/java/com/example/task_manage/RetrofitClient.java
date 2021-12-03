@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://192.168.43.144/taskManagement/AppBacked/";
+    private static final String BASE_URL = "http://192.168.43.131/taskManagement/AppBacked/";
     private static com.example.task_manage.RetrofitClient myClient;
     private Retrofit retrofit;
 
