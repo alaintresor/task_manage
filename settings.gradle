@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Task_manage"
+rootProject.name = "Kora_App"
